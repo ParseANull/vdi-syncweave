@@ -139,7 +139,7 @@
 			<echo message="Creating directory: @{pluginsDir}/@{plugin}/lib" />
 			<mkdir dir="@{pluginsDir}/@{plugin}/lib" />
 
-			<copy todir="@{pluginsDir}/@{plugin}/lib" overwrite="false" flatten="true" verbose="true">
+			<copy todir="@{pluginsDir}/@{plugin}/lib" overwrite="true" flatten="true" verbose="true">
 				<dependencies />
 			</copy>
 

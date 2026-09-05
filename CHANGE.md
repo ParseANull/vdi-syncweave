@@ -106,3 +106,15 @@ We plan to reduce build cycle time by adding segmented Ant entry points and usag
 
 - Added `connectors-all`, `functions-all`, and `parsers-all` targets to `build.xml` for segmented build execution.
 - Updated `docs/syncweave_vagrant_build_steps.md` with segmented build commands and recommended escalation flow (`component -> JARS -> package`).
+
+## 2026-09-05 (Planned Before Edits - Wave 8)
+
+We plan to harden OSGi dependency preparation so stale or partial jar artifacts do not poison later builds:
+
+- Update OSGi dependency copy behavior to overwrite existing plugin `lib/*.jar` entries during each build.
+- Validate that copied dependency jars are readable in the OSGi builder workspace.
+
+## 2026-09-05 (Completed - Wave 8)
+
+- Updated `osgi/build.xml` macro `copyPluginDeps` to use `overwrite="true"` so dependency jars are refreshed every run.
+- This prevents stale or corrupted copies (for example `miserver.jar`) from being reused by PDE plugin compilation.
