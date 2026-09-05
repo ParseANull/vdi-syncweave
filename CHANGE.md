@@ -76,3 +76,33 @@ We plan to add AI guidance and enforcement scaffolding:
 - Updated local `.vscode/copilot-instructions.md` to align with 12 Factor, GoF, BDD, Git Flow, and junior-friendly documentation style.
 - Added `.github/ENFORCEMENT.md` plus `.github/workflows/policy-checks.yml` for lightweight policy presence checks in CI.
 - Updated `.github/README.md` to include the new Copilot and enforcement guidance links.
+
+## 2026-09-05 (Planned Before Edits - Wave 6)
+
+We plan to add a Vagrant + VirtualBox build path so we can build without WSL:
+
+- Add a repository `Vagrantfile` with a Linux VM profile suitable for SyncWeave builds.
+- Add provisioning and build helper scripts to install Java 21, Ant 1.10.17, and runtime dependencies.
+- Add contributor documentation with Windows + VirtualBox setup steps and build commands.
+- Ignore local `.vagrant/` runtime artifacts from version control.
+
+## 2026-09-05 (Completed - Wave 6)
+
+- Added `Vagrantfile` for a VirtualBox-backed Ubuntu build VM.
+- Added `build/scripts/provision-vagrant.sh` to install Java 21, Ant 1.10.17, and required Linux packages.
+- Added `build/scripts/build-in-vagrant.sh` to run `ant resolve rename_jars package` with repo-local environment.
+- Added `docs/syncweave_vagrant_build_steps.md` with end-to-end setup and troubleshooting guidance.
+- Updated `.gitignore` to exclude `.vagrant/` runtime files.
+
+## 2026-09-05 (Planned Before Edits - Wave 7)
+
+We plan to reduce build cycle time by adding segmented Ant entry points and usage guidance:
+
+- Add aggregate build targets for connectors, functions, and parsers.
+- Document a connectors-first iterative workflow for Vagrant builds.
+- Document promotion steps from segmented builds to broader `JARS` and `package` verification.
+
+## 2026-09-05 (Completed - Wave 7)
+
+- Added `connectors-all`, `functions-all`, and `parsers-all` targets to `build.xml` for segmented build execution.
+- Updated `docs/syncweave_vagrant_build_steps.md` with segmented build commands and recommended escalation flow (`component -> JARS -> package`).
