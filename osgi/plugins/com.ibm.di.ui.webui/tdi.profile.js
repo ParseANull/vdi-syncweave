@@ -10,9 +10,14 @@ var profile = (function() {
 		releaseName : "static",
 
 		action : "release",
-		mini : true,
+		// Keep release unminified in VM builds to avoid long-running/fragile optimizer phases.
+		mini : false,
+		// Dojo 1.8 build scripts do not support optimize="none".
+		optimize : "shrinksafe",
+		layerOptimize : "shrinksafe",
 		selectorEngine : "lite",
-		cssOptimize : "none",
+		// Hard-disable CSS optimization to bypass URL rewrite failures in legacy OneUI styles.
+		cssOptimize : false,
 
 		htmlFiles : "index.html",
 

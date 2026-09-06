@@ -579,21 +579,26 @@
 
 	<target name="setupWebUI">
 
+		<!-- Always use the repository profile so standalone target runs don't use stale exported copies. -->
+		<copy file="${project.root.osgi}/plugins/com.ibm.di.ui.webui/tdi.profile.js"
+			tofile="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/tdi.profile.js"
+			overwrite="true"
+			failonerror="false" />
+
 		<!-- expand the OneUI release into com.ibm.di.ui.webui/static -->
 		<unzip src="${root.oneui_src}" dest="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static.build" />
 
 		<!-- expand the CodeMirror release into com.ibm.di.ui.webui/static -->
 		<unzip src="${root.codemirror_src}" dest="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static.build" />
 
-		<!-- move all static files over to static.build -->
-		<move
-			file="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static/tdi"
-			todir="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static.build"
-		/>
+		<!-- Merge product-specific WebUI sources (tdi modules and images) into the OneUI source tree.
+		     Keep this tolerant for standalone target runs where exported static sources may not exist yet. -->
+		<copy todir="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static.build/tdi" overwrite="true" failonerror="false">
+			<fileset dir="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static/tdi" erroronmissingdir="false" />
+		</copy>
 
-		<!-- preserve static image assets in the generated WebUI release -->
-		<copy todir="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static.build/images">
-			<fileset dir="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static/images" />
+		<copy todir="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static.build/images" overwrite="true" failonerror="false">
+			<fileset dir="${project.root.export.osgi.build.plugins}/com.ibm.di.ui.webui/static/images" erroronmissingdir="false" />
 		</copy>
 
 		<!-- Copy EasyETL nls properties to WebUI -->
@@ -635,7 +640,7 @@
 		<mkdir dir="${project.root.export.osgi.build}/features" />
 
 		<!-- copy all plugin projects over to the build directory -->
-		<copy todir="${project.root.export.osgi.build.plugins}">
+		<copy todir="${project.root.export.osgi.build.plugins}" overwrite="true">
 		<!-- Note: the skip.me files are skipped as they are only provided there to avoid CMVC flaw
 		     of not working with empty directories, e.g. src, but they are needed by the eclipse builder.
 			 This workaround will become useless once TDI source is spread out in OSGi bundles -->
