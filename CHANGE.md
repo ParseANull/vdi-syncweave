@@ -118,3 +118,15 @@ We plan to harden OSGi dependency preparation so stale or partial jar artifacts 
 
 - Updated `osgi/build.xml` macro `copyPluginDeps` to use `overwrite="true"` so dependency jars are refreshed every run.
 - This prevents stale or corrupted copies (for example `miserver.jar`) from being reused by PDE plugin compilation.
+
+## 2026-09-05 (Planned Before Edits - Wave 9)
+
+We plan to improve WebUI Dojo build stability in Linux VM package runs:
+
+- Disable CSS optimization in the Dojo profile used by OSGi `setupWebUI`.
+- Avoid path-resolution failures during CSS rewrite (`error(357)`) for legacy OneUI relative URLs.
+
+## 2026-09-05 (Completed - Wave 9)
+
+- Updated `osgi/plugins/com.ibm.di.ui.webui/tdi.profile.js` from `cssOptimize: "comments"` to `cssOptimize: "none"`.
+- This avoids repeated CSS optimizer path errors in VM builds while preserving JS packaging and release output generation.

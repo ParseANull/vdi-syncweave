@@ -12,7 +12,7 @@ var profile = (function() {
 		action : "release",
 		mini : true,
 		selectorEngine : "lite",
-		cssOptimize : "comments",
+		cssOptimize : "none",
 
 		htmlFiles : "index.html",
 
